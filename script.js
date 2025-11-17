@@ -101,15 +101,22 @@ form.addEventListener("submit", async (event) => {
   };
 
   const formData = new FormData();
-  if (values.photo) {
-    embed.image = { url: `attachment://${values.photo.name}` };
-    // Використовуємо одне вкладення та прив'язуємо його прямо до embed через attachment://
-    formData.append("file", values.photo, values.photo.name);
-  }
-
   const payload = {
     embeds: [embed],
   };
+
+  if (values.photo) {
+    const attachmentName = `photo-${Date.now()}-${values.photo.name}`;
+    embed.image = { url: `attachment://${attachmentName}` };
+    payload.attachments = [
+      {
+        id: 0,
+        description: "Фото оголошення",
+        filename: attachmentName,
+      },
+    ];
+    formData.append("files[0]", values.photo, attachmentName);
+  }
 
   formData.append("payload_json", JSON.stringify(payload));
 
