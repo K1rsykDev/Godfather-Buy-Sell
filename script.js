@@ -61,6 +61,7 @@ form.addEventListener("submit", async (event) => {
     discord: form.discord.value.trim(),
     category: form.category.value,
     itemName: form.itemName.value.trim(),
+    price: form.price.value.trim(),
     description: form.description.value.trim(),
     photo: form.photo.files[0],
   };
@@ -92,6 +93,9 @@ form.addEventListener("submit", async (event) => {
       { name: "Discord", value: values.discord, inline: true },
       { name: "Категорія", value: values.category, inline: true },
       { name: "Тип оголошення", value: state.type === "sell" ? "Продам" : "Куплю", inline: true },
+      ...(values.price
+        ? [{ name: "Ціна/Бюджет", value: values.price, inline: true }]
+        : []),
       { name: "Опис", value: values.description, inline: false },
     ],
   };
