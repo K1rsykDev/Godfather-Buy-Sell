@@ -1,4 +1,4 @@
-const webhookUrl = "https://discord.com/api/webhooks/your-webhook-url"; // Заміни на свій Webhook
+const webhookUrl = "https://discord.com/api/webhooks/1440084903151534094/oGwEERmrJyr9zGZimB79ePKx9Ztfg5KsEjWkOVrKTCxJVAP8pKQBBZxKAU8iErX6Oxfj"; // Заміни на свій Webhook
 
 const state = {
   type: null,
