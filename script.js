@@ -99,22 +99,13 @@ form.addEventListener("submit", async (event) => {
   const formData = new FormData();
   if (values.photo) {
     embed.image = { url: `attachment://${values.photo.name}` };
-    formData.append("files[0]", values.photo, values.photo.name);
+    // Використовуємо одне вкладення та прив'язуємо його прямо до embed через attachment://
+    formData.append("file", values.photo, values.photo.name);
   }
 
   const payload = {
     embeds: [embed],
   };
-
-  if (values.photo) {
-    payload.attachments = [
-      {
-        id: 0,
-        filename: values.photo.name,
-        description: "Фото оголошення",
-      },
-    ];
-  }
 
   formData.append("payload_json", JSON.stringify(payload));
 
