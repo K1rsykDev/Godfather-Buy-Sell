@@ -1,4 +1,4 @@
-const webhookUrl = "https://discord.com/api/webhooks/1440084903151534094/oGwEERmrJyr9zGZimB79ePKx9Ztfg5KsEjWkOVrKTCxJVAP8pKQBBZxKAU8iErX6Oxfj"; // Заміни на свій Webhook
+const webhookUrl = "https://discord.com/api/webhooks/your-webhook-url"; // Заміни на свій Webhook
 
 const state = {
   type: null,
@@ -71,6 +71,12 @@ form.addEventListener("submit", async (event) => {
     return;
   }
 
+  if (!webhookUrl || webhookUrl.includes("your-webhook-url")) {
+    formMessage.textContent = "Спершу замініть webhookUrl у script.js на свій Discord Webhook.";
+    formMessage.classList.add("form__message--error");
+    return;
+  }
+
   submitBtn.disabled = true;
   submitBtn.textContent = "Надсилання...";
 
@@ -93,10 +99,24 @@ form.addEventListener("submit", async (event) => {
   const formData = new FormData();
   if (values.photo) {
     embed.image = { url: `attachment://${values.photo.name}` };
-    formData.append("files[0]", values.photo);
+    formData.append("files[0]", values.photo, values.photo.name);
   }
 
-  formData.append("payload_json", JSON.stringify({ embeds: [embed] }));
+  const payload = {
+    embeds: [embed],
+  };
+
+  if (values.photo) {
+    payload.attachments = [
+      {
+        id: 0,
+        filename: values.photo.name,
+        description: "Фото оголошення",
+      },
+    ];
+  }
+
+  formData.append("payload_json", JSON.stringify(payload));
 
   try {
     const response = await fetch(webhookUrl, {
@@ -105,7 +125,8 @@ form.addEventListener("submit", async (event) => {
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
+      const errorText = await response.text();
+      throw new Error(`HTTP ${response.status} – ${errorText}`);
     }
 
     formMessage.textContent = "Ваше оголошення успішно відправлено в Discord.";
@@ -116,7 +137,11 @@ form.addEventListener("submit", async (event) => {
     formTitle.textContent = "Заповніть форму";
   } catch (error) {
     console.error(error);
-    formMessage.textContent = "Сталася помилка під час відправки. Спробуйте ще раз.";
+    const helpText =
+      error instanceof TypeError
+        ? "Перевірте підключення або CORS (запускайте зі статичного сервера, а не напряму з файлу)."
+        : "Сталася помилка під час відправки. Спробуйте ще раз.";
+    formMessage.textContent = helpText;
     formMessage.classList.add("form__message--error");
   } finally {
     submitBtn.disabled = false;
