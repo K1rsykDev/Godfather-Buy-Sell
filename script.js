@@ -82,28 +82,33 @@ form.addEventListener("submit", async (event) => {
   submitBtn.textContent = "Надсилання...";
 
   const titlePrefix = state.type === "sell" ? "ПРОДАМ" : "КУПЛЮ";
-  const color = state.type === "sell" ? 0xf97316 : 0x22c55e;
-  const embed = {
-    title: `Оголошення: ${titlePrefix} – ${values.itemName}`,
-    color,
-    fields: [
-      { name: "Нік у грі", value: values.nickname, inline: true },
-      { name: "Телефон", value: values.phone, inline: true },
-      { name: "Static", value: values.static, inline: true },
-      { name: "Discord", value: values.discord, inline: true },
-      { name: "Категорія", value: values.category, inline: true },
-      { name: "Тип оголошення", value: state.type === "sell" ? "Продам" : "Куплю", inline: true },
-      ...(values.price
-        ? [{ name: "Ціна/Бюджет", value: values.price, inline: true }]
-        : []),
-      { name: "Опис", value: values.description, inline: false },
-    ],
-  };
+const color = state.type === "sell" ? 0xf97316 : 0x22c55e;
 
-  const formData = new FormData();
-  const payload = {
-    embeds: [embed],
-  };
+const embed = {
+  title: `Оголошення: ${titlePrefix} – ${values.itemName}`,
+  color,
+  fields: [
+    { name: "Нік у грі", value: values.nickname, inline: true },
+    { name: "Телефон", value: values.phone, inline: true },
+    { name: "Static", value: values.static, inline: true },
+    { name: "Discord", value: values.discord, inline: true },
+    { name: "Категорія", value: values.category, inline: true },
+    { name: "Тип оголошення", value: state.type === "sell" ? "Продам" : "Куплю", inline: true },
+    ...(values.price
+      ? [{ name: "Ціна/Бюджет", value: values.price, inline: true }]
+      : []),
+    { name: "Опис", value: values.description, inline: false },
+  ],
+};
+
+const formData = new FormData();
+
+// 🔥 ТУТ ДОДАНО ЗВИЧАЙНИЙ ТЕКСТ ДЛЯ MENTION
+// Наприклад: "<@&1234567890>" або "@everyone"
+const payload = {
+  content: values.mention || "<@&1387276480903647273>", // ⬅️ Сюди ти передаєш mention ролі
+  embeds: [embed],
+};
 
   if (values.photo) {
     const attachmentName = `photo-${Date.now()}-${values.photo.name}`;
