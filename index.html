@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GTA RP | Оголошення Продам / Куплю</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="sell-mode">
+  <div class="bg-grid"></div>
+  <header class="hero">
+    <p class="eyebrow">GTA RP Discord Community</p>
+    <h1>Buy &amp; Sell Hub</h1>
+    <p class="subtitle">Оголошення Продам / Куплю</p>
+    <p class="description">Миттєво надсилай оголошення у Discord через Webhook. Безпечний обмін між гравцями з повною перевіркою даних.</p>
+  </header>
+
+  <main class="card">
+    <div class="card-header">
+      <div class="type-toggle" role="group" aria-label="Тип оголошення">
+        <button type="button" class="toggle-btn active" data-type="sell">Продам</button>
+        <button type="button" class="toggle-btn" data-type="buy">Куплю</button>
+      </div>
+      <span class="badge" id="adTypeLabel">Продам</span>
+    </div>
+
+    <form id="adForm" novalidate>
+      <section class="section">
+        <div class="section-title">
+          <div class="dot"></div>
+          <p>Дані користувача</p>
+        </div>
+        <div class="grid">
+          <label class="field">
+            <span>NickName у грі *</span>
+            <input type="text" name="nickname" placeholder="Hustler_Major" required />
+            <small class="error" data-error-for="nickname"></small>
+          </label>
+          <label class="field">
+            <span>Телефон *</span>
+            <input type="tel" name="phone" placeholder="123-456" required />
+            <small class="error" data-error-for="phone"></small>
+          </label>
+          <label class="field">
+            <span>Static ID *</span>
+            <input type="text" name="staticId" placeholder="S-4098" required />
+            <small class="error" data-error-for="staticId"></small>
+          </label>
+          <label class="field">
+            <span>Discord *</span>
+            <input type="text" name="discord" placeholder="username#0000" required />
+            <small class="error" data-error-for="discord"></small>
+          </label>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-title">
+          <div class="dot"></div>
+          <p>Дані оголошення</p>
+        </div>
+        <div class="grid">
+          <label class="field">
+            <span>Категорія *</span>
+            <select name="category" required>
+              <option value="">Оберіть категорію</option>
+              <option>Нерухомість</option>
+              <option>Транспорт</option>
+              <option>Аксесуари</option>
+              <option>Одяг</option>
+              <option>Рюкзаки</option>
+              <option>Зброя</option>
+              <option>Інше</option>
+            </select>
+            <small class="error" data-error-for="category"></small>
+          </label>
+          <label class="field">
+            <span>Назва предмета / транспорту *</span>
+            <input type="text" name="title" placeholder="Comet Retro / Кейс LV" required />
+            <small class="error" data-error-for="title"></small>
+          </label>
+          <label class="field">
+            <span>Ціна / Бюджет</span>
+            <input type="text" name="price" placeholder="$150 000" />
+            <small class="error" data-error-for="price"></small>
+          </label>
+          <label class="field full">
+            <span>Опис</span>
+            <textarea name="description" rows="3" placeholder="Коротко про стан, тюн, пробіг або бажаний бюджет"></textarea>
+            <small class="error" data-error-for="description"></small>
+          </label>
+          <label class="field">
+            <span>Фото (URL)</span>
+            <input type="url" name="photoUrl" placeholder="https://..." />
+            <small class="error" data-error-for="photoUrl"></small>
+          </label>
+          <label class="field">
+            <span>Фото (завантажити)</span>
+            <input type="file" name="photoUpload" accept="image/*" />
+            <small class="error" data-error-for="photoUpload"></small>
+          </label>
+        </div>
+      </section>
+
+      <div class="actions">
+        <button type="submit" class="primary">Надіслати оголошення</button>
+        <p class="hint">Перед відправкою всі обов'язкові поля мають бути заповнені. Фото можна передати посиланням або файлом.</p>
+        <p class="hint webhook-hint" id="webhookHint"></p>
+      </div>
+      <div class="status" role="status" aria-live="polite"></div>
+    </form>
+  </main>
+
+  <footer class="footer">
+    <p>Зроблено для Discord GTA 5 RP спільноти. Відправка напряму у канал через Webhook.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
