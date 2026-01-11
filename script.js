@@ -2,7 +2,7 @@
 const RAW_WEBHOOK_URL =
   (typeof window !== "undefined" && window.WEBHOOK_URL) ||
   new URLSearchParams(window.location.search).get("webhook") ||
-  "https://discord.com/api/webhooks/1440084903151534094/oGwEERmrJyr9zGZimB79ePKx9Ztfg5KsEjWkOVrKTCxJVAP8pKQBBZxKAU8iErX6Oxfj";
+  "https://discord.com/api/webhooks/1459775592688783574/5xAHuEBOscogfxiLYnL_deMGKT62tg8VPvlUMBqu2_yXfOHv-g-h0tnsCOv3tBG5KCgq";
 const WEBHOOK_URL = RAW_WEBHOOK_URL.trim();
 
 const form = document.getElementById("adForm");
